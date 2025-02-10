@@ -109,11 +109,19 @@ pub struct Source {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_sorted_keys:
         Option<RuleAssistConfiguration<biome_json_analyze::options::UseSortedKeys>>,
+    #[doc = "Enforce keys sorting in objects."]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub use_sorted_properties:
+        Option<RuleAssistConfiguration<biome_js_analyze::options::UseSortedProperties>>,
 }
 impl Source {
     const GROUP_NAME: &'static str = "source";
-    pub(crate) const GROUP_RULES: &'static [&'static str] =
-        &["organizeImports", "useSortedAttributes", "useSortedKeys"];
+    pub(crate) const GROUP_RULES: &'static [&'static str] = &[
+        "organizeImports",
+        "useSortedAttributes",
+        "useSortedKeys",
+        "useSortedProperties",
+    ];
     pub(crate) fn get_enabled_rules(&self) -> FxHashSet<RuleFilter<'static>> {
         let mut index_set = FxHashSet::default();
         if let Some(rule) = self.organize_imports.as_ref() {
@@ -129,6 +137,11 @@ impl Source {
         if let Some(rule) = self.use_sorted_keys.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]));
+            }
+        }
+        if let Some(rule) = self.use_sorted_properties.as_ref() {
+            if rule.is_enabled() {
+                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[3]));
             }
         }
         index_set
@@ -152,6 +165,10 @@ impl Source {
                 .map(|conf| (conf.level(), conf.get_options())),
             "useSortedKeys" => self
                 .use_sorted_keys
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "useSortedProperties" => self
+                .use_sorted_properties
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
             _ => None,

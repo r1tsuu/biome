@@ -2884,6 +2884,14 @@
 				{ "$ref": "#/definitions/RuleAssistWithOptions_for_Options" }
 			]
 		},
+		"RuleAssistConfiguration_for_UseSortedPropertiesOptions": {
+			"anyOf": [
+				{ "$ref": "#/definitions/RuleAssistPlainConfiguration" },
+				{
+					"$ref": "#/definitions/RuleAssistWithOptions_for_UseSortedPropertiesOptions"
+				}
+			]
+		},
 		"RuleAssistPlainConfiguration": { "type": "string", "enum": ["on", "off"] },
 		"RuleAssistWithOptions_for_Null": {
 			"type": "object",
@@ -2908,6 +2916,21 @@
 				"options": {
 					"description": "Rule's options",
 					"allOf": [{ "$ref": "#/definitions/Options" }]
+				}
+			},
+			"additionalProperties": false
+		},
+		"RuleAssistWithOptions_for_UseSortedPropertiesOptions": {
+			"type": "object",
+			"required": ["level", "options"],
+			"properties": {
+				"level": {
+					"description": "The severity of the emitted diagnostics by the rule",
+					"allOf": [{ "$ref": "#/definitions/RuleAssistPlainConfiguration" }]
+				},
+				"options": {
+					"description": "Rule's options",
+					"allOf": [{ "$ref": "#/definitions/UseSortedPropertiesOptions" }]
 				}
 			},
 			"additionalProperties": false
@@ -3476,6 +3499,15 @@
 					"description": "Sorts the keys of a JSON object in natural order",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleAssistConfiguration_for_Null" },
+						{ "type": "null" }
+					]
+				},
+				"useSortedProperties": {
+					"description": "Enforce keys sorting in objects.",
+					"anyOf": [
+						{
+							"$ref": "#/definitions/RuleAssistConfiguration_for_UseSortedPropertiesOptions"
+						},
 						{ "type": "null" }
 					]
 				}
@@ -4503,6 +4535,14 @@
 			"type": "object",
 			"properties": {
 				"ignoreHtmlElements": { "default": false, "type": "boolean" }
+			},
+			"additionalProperties": false
+		},
+		"UseSortedPropertiesOptions": {
+			"type": "object",
+			"properties": {
+				"partionByComment": { "default": false, "type": "boolean" },
+				"partionByNewLine": { "default": false, "type": "boolean" }
 			},
 			"additionalProperties": false
 		},

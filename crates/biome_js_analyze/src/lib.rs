@@ -176,7 +176,6 @@ mod tests {
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
 
-    #[ignore]
     #[test]
     fn quick_test() {
         fn markup_to_string(markup: Markup) -> String {
@@ -188,13 +187,20 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"import buffer from "buffer"; "#;
+        const SOURCE: &str = r#"const obj = {
+	b: 1,
+    // MY COMMENT
+	a: 1,
+
+    z:1,
+};
+"#;
 
         let parsed = parse(SOURCE, JsFileSource::tsx(), JsParserOptions::default());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("style", "useNodejsImportProtocol");
+        let rule_filter = RuleFilter::Rule("source", "useSortedProperties");
 
         let mut dependencies = Dependencies::default();
         dependencies.add("buffer", "latest");

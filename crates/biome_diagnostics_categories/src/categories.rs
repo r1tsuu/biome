@@ -342,6 +342,7 @@ define_categories! {
     // end lint rules
     // start assists rules
     "assists/source/useSortedKeys": "https://biomejs.dev/linter/actions/use-sorted-keys",
+    "assists/source/useSortedProperties": "https://biomejs.dev/linter/actions/use-sorted-keys",
     // end assists rules
     ; // start syntax rules
     "syntax/correctness/noTypeOnlyImportAttributes",

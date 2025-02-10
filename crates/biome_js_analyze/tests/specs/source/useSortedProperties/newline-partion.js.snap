@@ -1,0 +1,39 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: newline-partion.js
+---
+# Input
+```jsx
+const obj = {
+	b: 1,
+	a: 1,
+
+	ba: 2,
+	ab: 1,
+
+	aba: 2,
+	abc: 3,
+	abb: 3,
+};
+
+```
+
+# Actions
+```diff
+@@ -1,11 +1,11 @@
+ const obj = {
++	a: 1,
+ 	b: 1,
+-	a: 1,
+ 
++	ab: 1,
+ 	ba: 2,
+-	ab: 1,
+ 
+ 	aba: 2,
+-	abc: 3,
+ 	abb: 3,
++	abc: 3,
+ };
+
+```

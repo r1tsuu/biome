@@ -693,6 +693,10 @@ export interface Source {
 	 * Sorts the keys of a JSON object in natural order
 	 */
 	useSortedKeys?: RuleAssistConfiguration_for_Null;
+	/**
+	 * Enforce keys sorting in objects.
+	 */
+	useSortedProperties?: RuleAssistConfiguration_for_UseSortedPropertiesOptions;
 }
 export type QuoteStyle = "double" | "single";
 export type ArrowParentheses = "always" | "asNeeded";
@@ -2072,6 +2076,9 @@ export type RuleAssistConfiguration_for_Options =
 export type RuleAssistConfiguration_for_Null =
 	| RuleAssistPlainConfiguration
 	| RuleAssistWithOptions_for_Null;
+export type RuleAssistConfiguration_for_UseSortedPropertiesOptions =
+	| RuleAssistPlainConfiguration
+	| RuleAssistWithOptions_for_UseSortedPropertiesOptions;
 export type RuleFixConfiguration_for_Null =
 	| RulePlainConfiguration
 	| RuleWithFixOptions_for_Null;
@@ -2170,6 +2177,16 @@ export interface RuleAssistWithOptions_for_Null {
 	 * Rule's options
 	 */
 	options: null;
+}
+export interface RuleAssistWithOptions_for_UseSortedPropertiesOptions {
+	/**
+	 * The severity of the emitted diagnostics by the rule
+	 */
+	level: RuleAssistPlainConfiguration;
+	/**
+	 * Rule's options
+	 */
+	options: UseSortedPropertiesOptions;
 }
 export type RulePlainConfiguration = "warn" | "error" | "info" | "off";
 export interface RuleWithFixOptions_for_Null {
@@ -2479,6 +2496,10 @@ export interface RuleWithFixOptions_for_NoDoubleEqualsOptions {
 export interface Options {
 	importGroups?: ImportGroup[];
 	legacy?: boolean;
+}
+export interface UseSortedPropertiesOptions {
+	partionByComment?: boolean;
+	partionByNewLine?: boolean;
 }
 /**
  * Used to identify the kind of code action emitted by a rule
@@ -3300,6 +3321,7 @@ export type Category =
 	| "lint/suspicious/useNumberToFixedDigitsArgument"
 	| "lint/suspicious/useValidTypeof"
 	| "assists/source/useSortedKeys"
+	| "assists/source/useSortedProperties"
 	| "syntax/correctness/noTypeOnlyImportAttributes"
 	| "syntax/correctness/noSuperWithoutExtends"
 	| "syntax/correctness/noInitializerWithDefinite"
